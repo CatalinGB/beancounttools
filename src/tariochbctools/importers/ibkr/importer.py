@@ -203,6 +203,11 @@ class Importer(importer.ImporterProtocol):
         narration = "Buy"
         feeAccount = self.getFeeAccount(account)
         liquidityAccount = self.getLiquidityAccount(account, currency)
+
+        # Beancount doesn't support assets smaller than 3 symbols
+        if len(asset) < 3:
+            asset = asset + ((3 - len(asset)) * 'X')
+
         assetAccount = self.getAssetAccount(account, asset)
 
         liquidityPrice = None
